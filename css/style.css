@@ -84,7 +84,13 @@ button { cursor: pointer; }
 .modal h2 { font-size: 25px; font-weight: 400; letter-spacing: -.06em; }.modal-description { margin-top: 10px; color: var(--quiet); font-size: 15px; }.modal-close { position: absolute; top: 12px; right: 16px; border: 0; background: transparent; color: #a8adb1; font-size: 28px; line-height: 1; }
 .contact-groups { display: grid; gap: 26px; margin-top: 28px; }.contact-group { padding-top: 20px; border-top: 1px solid var(--rule); }.contact-group h3 { color: var(--blue); font-size: 15px; font-weight: 400; }.contact-group a, .contact-group div { display: flex; justify-content: space-between; gap: 14px; padding: 15px 0 0; color: var(--ink); text-decoration: none; font-size: 15px; }.contact-group strong { font-weight: 400; }.contact-group span { color: var(--quiet); text-align: right; font-size: 13px; }
 #message-form { display: grid; gap: 18px; margin-top: 28px; }.modal label { display: grid; gap: 8px; color: var(--soft-ink); font-size: 14px; }.modal input, .modal textarea { width: 100%; border: 1px solid rgba(47,81,101,.18); border-radius: 12px; padding: 13px 14px; color: var(--ink); background: #fbfcfc; font-family: inherit; font-size: 15px; outline: none; }.modal textarea { min-height: 130px; resize: vertical; }.modal input:focus, .modal textarea:focus { border-color: var(--blue); }.form-submit { margin-top: 4px; padding: 15px; border: 0; border-radius: 12px; background: var(--blue); color: #fff; font-size: 16px; }
-.map-box { border: 0; width: 100%; display: block; cursor: pointer; }
+.map-box { position: relative; overflow: hidden; width: 100%; border: 0; display: block; cursor: default; }
+.map-fallback { position: absolute; inset: 0; overflow: hidden; background: #e1efd5; transition: opacity .25s; }
+.map-loaded .map-fallback { opacity: 0; pointer-events: none; }
+.map-road { position: absolute; display: block; height: 18px; border: 5px solid #fff; background: #e8d6a4; box-shadow: 0 0 0 1px rgba(115, 125, 106, .16); transform-origin: center; }
+.road-one { width: 125%; top: 42%; left: -10%; transform: rotate(-18deg); }.road-two { width: 110%; top: 15%; left: 22%; transform: rotate(63deg); }.road-three { width: 85%; top: 68%; left: 27%; transform: rotate(8deg); }
+.map-water { position: absolute; width: 70%; height: 42%; right: -16%; bottom: -14%; border-radius: 50% 50% 0 0; background: #b8dce5; transform: rotate(-20deg); }.map-label { position: absolute; color: #66736b; font-size: 13px; font-weight: 400; letter-spacing: -.04em; }.label-gongdeok { top: 27%; left: 25%; }.label-mapodaero { right: 17%; top: 54%; transform: rotate(-18deg); }
+.map-route-button { position: absolute; z-index: 2; left: 16px; bottom: 16px; padding: 10px 14px; border: 0; border-radius: 999px; background: rgba(38, 47, 54, .82); color: #fff; font-size: 13px; box-shadow: 0 5px 12px rgba(38,47,54,.18); }
 
 @media (max-width: 760px) {
     .page-shell { padding: 0; }

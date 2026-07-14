@@ -52,6 +52,26 @@ function renderCalendar() {
     grid.innerHTML = cells.join("");
 }
 
+function initializeMap() {
+    const container = document.getElementById("map-view");
+    if (!container || !window.kakao?.maps) return;
+
+    window.kakao.maps.load(() => {
+        const position = new window.kakao.maps.LatLng(37.543450, 126.950664);
+        const map = new window.kakao.maps.Map(container, {
+            center: position,
+            level: 4
+        });
+        const marker = new window.kakao.maps.Marker({ position });
+        marker.setMap(map);
+        const infoWindow = new window.kakao.maps.InfoWindow({
+            content: '<div style="padding:8px 12px;font:13px Noto Sans KR,sans-serif;color:#182235;white-space:nowrap">아펠가모 공덕 라로브홀</div>'
+        });
+        infoWindow.open(map, marker);
+        container.classList.add("map-loaded");
+    });
+}
+
 async function copyText(text) {
     if (navigator.clipboard?.writeText) {
         try {
@@ -183,6 +203,7 @@ async function createMessage(name, message) {
 document.addEventListener("DOMContentLoaded", () => {
     renderCalendar();
     updateCountdown();
+    initializeMap();
     window.setInterval(updateCountdown, 1000);
     loadMessages();
 

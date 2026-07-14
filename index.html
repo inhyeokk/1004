@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500&family=Petit+Formal+Script&display=swap" rel="stylesheet">
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4" crossorigin="anonymous"></script>
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=64a830cb58e8b40ed6f25fe6f4a3e78f&amp;autoload=false"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -126,7 +127,17 @@
                     <strong>아펠가모 공덕 라로브홀</strong>
                     <p>서울 마포구 마포대로 92</p>
                 </div>
-                <button class="map-box blank-photo blank-map" id="map-click" data-app-url="kakaomap://route?ep=37.543450,126.950664&amp;by=CAR" type="button" aria-label="카카오맵에서 예식장 보기"></button>
+                <div class="map-box blank-map" id="map-view" aria-label="아펠가모 공덕 위치 지도">
+                    <div class="map-fallback" aria-hidden="true">
+                        <span class="map-road road-one"></span>
+                        <span class="map-road road-two"></span>
+                        <span class="map-road road-three"></span>
+                        <span class="map-water"></span>
+                        <span class="map-label label-gongdeok">공덕역</span>
+                        <span class="map-label label-mapodaero">마포대로</span>
+                    </div>
+                    <button class="map-route-button" id="map-click" data-app-url="kakaomap://route?ep=37.543450,126.950664&amp;by=CAR" type="button">카카오맵에서 길찾기</button>
+                </div>
                 <div class="map-actions" aria-label="지도 앱 선택">
                     <a class="map-action kakao-map" data-app-url="kakaomap://route?ep=37.543450,126.950664&amp;by=CAR" href="https://map.kakao.com/link/to/아펠가모공덕,37.543450,126.950664" target="_blank" rel="noreferrer">카카오맵</a>
                     <a class="map-action naver-map" data-app-url="nmap://route/public?dlat=37.543450&amp;dlng=126.950664&amp;dname=아펠가모%20공덕%20라로브홀&amp;appname=wedding-nice" href="https://map.naver.com/v5/search/아펠가모공덕/place/37554902?c=15,0,0,0,dh" target="_blank" rel="noreferrer">네이버지도</a>
