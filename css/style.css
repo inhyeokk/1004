@@ -56,11 +56,6 @@ img.hero-photo, img.portrait-photo { display: block; width: 100%; object-fit: co
 .photo-panel { padding: 0; background: var(--blue-deep); }
 .blank-photo-portrait { height: 700px; border-radius: 0; }
 
-.panel-date-banner { min-height: 660px; padding: 0; background: var(--blue); color: #fff; display: grid; place-items: center; text-align: center; }
-.date-banner-copy { display: grid; gap: 54px; justify-items: center; }
-.date-banner-month, .date-banner-year { font-family: var(--display); font-weight: 300; line-height: .85; letter-spacing: .025em; }
-.date-banner-month { font-size: 78px; }.date-banner-year { font-size: 104px; }
-
 .section-title { font-family: var(--display); font-size: 48px; font-weight: 300; line-height: .95; letter-spacing: .02em; text-align: center; }
 .section-subtitle { margin-top: 20px; color: var(--quiet); font-size: 14px; line-height: 1.7; text-align: center; letter-spacing: -.02em; }
 .wedding-panel { text-align: center; }
@@ -122,18 +117,6 @@ img.hero-photo, img.portrait-photo { display: block; width: 100%; object-fit: co
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
     .reveal { opacity: 1; transform: none; }
-}
-
-@media (max-width: 760px) {
-    .page-shell { padding: 0; }
-    .invitation-card { width: 100%; border-radius: 0; box-shadow: none; }
-    .panel { padding: 52px 22px 60px; }
-    .title-row { padding-top: 4px; gap: 12px; }.title-name { font-size: clamp(17px, 4.7vw, 20px); }.title-and { font-size: clamp(23px, 7vw, 27px); }
-    .blank-photo-hero { height: 520px; margin-top: 60px; }.hero-meta { padding-top: 56px; font-size: clamp(15px, 4.6vw, 17px); }
-    .quote-panel { min-height: 520px; padding-top: 56px; }.quote-divider { margin-bottom: 52px; }.quote-body { font-size: clamp(15px, 4.2vw, 16px); }.quote-source { margin-top: 42px; font-size: clamp(13px, 3.8vw, 14px); }.quote-invite { margin-top: 40px; font-size: clamp(13px, 3.8vw, 15px); }.quote-sign { margin-top: 42px; font-size: clamp(14px, 4vw, 16px); }
-    .blank-photo-portrait { height: 620px; }.panel-date-banner { min-height: 620px; }.date-banner-month { font-size: clamp(60px, 17vw, 78px); }.date-banner-year { font-size: clamp(82px, 23vw, 104px); }
-    .section-title { font-size: clamp(42px, 13vw, 48px); }.section-subtitle { font-size: clamp(13px, 4vw, 14px); }.wedding-date-ko { font-size: clamp(14px, 4.4vw, 16px); }.wedding-date-en { font-size: clamp(13px, 3.9vw, 14px); }.calendar-grid { gap: 22px 0; }.countdown-grid { grid-template-columns: repeat(2, 1fr); }
-    .gallery-focus { height: 390px; }.gallery-side { height: 372px; }.gallery-stage { margin-left: -22px; margin-right: -22px; }.gallery-footer { margin-left: -22px; margin-right: -22px; }.gallery-track { gap: 0; }.gallery-track img { flex-basis: 80%; width: 80%; }.map-box { height: 250px; }.info-card { padding-left: 20px; padding-right: 20px; }.share-buttons { padding-left: 22px; padding-right: 22px; }
 }
 
 @media (min-width: 1024px) {
