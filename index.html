@@ -25,7 +25,7 @@
                     <span class="title-and">and</span>
                     <h1 class="title-name">신부 홍은채</h1>
                 </header>
-                <div class="blank-photo blank-photo-hero" aria-hidden="true"></div>
+                <img class="blank-photo blank-photo-hero hero-photo" src="assets/images/hero.jpg" alt="신랑과 신부가 함께 서 있는 웨딩 사진">
                 <div class="hero-meta">
                     <p>2026. 10. 04. <span></span> 오후 12시 30분</p>
                     <p>아펠가모 공덕 라로브홀</p>
@@ -48,7 +48,7 @@
             </section>
 
             <section class="panel panel-blue photo-panel">
-                <div class="blank-photo blank-photo-portrait" aria-hidden="true"></div>
+                <img class="blank-photo blank-photo-portrait portrait-photo" src="assets/images/portrait.jpg" alt="신랑과 신부가 나란히 앉아 있는 사진">
             </section>
 
             <section class="panel panel-date-banner">
@@ -110,15 +110,35 @@
                 <h2 class="section-title">GALLERY</h2>
                 <p class="section-subtitle">사진을 클릭하시면 전체 화면 보기가 가능합니다</p>
                 <div class="gallery-stage">
-                    <button class="gallery-nav" type="button" aria-label="이전">‹</button>
-                    <div class="gallery-strip" aria-hidden="true">
-                        <div class="gallery-side"></div>
-                        <div class="gallery-focus blank-photo"></div>
-                        <div class="gallery-side"></div>
+                    <div class="gallery-viewport" id="gallery-viewport">
+                        <div class="gallery-track" id="gallery-track">
+                            <img src="assets/images/gallery-01.jpg" alt="웨딩 사진 1">
+                            <img src="assets/images/gallery-02.jpg" alt="웨딩 사진 2">
+                            <img src="assets/images/gallery-03.jpg" alt="웨딩 사진 3">
+                            <img src="assets/images/gallery-04.jpg" alt="웨딩 사진 4">
+                            <img src="assets/images/gallery-05.jpg" alt="웨딩 사진 5">
+                            <img src="assets/images/gallery-06.jpg" alt="웨딩 사진 6">
+                            <img src="assets/images/gallery-07.jpg" alt="웨딩 사진 7">
+                            <img src="assets/images/gallery-08.jpg" alt="웨딩 사진 8">
+                            <img src="assets/images/gallery-09.jpg" alt="웨딩 사진 9">
+                            <img src="assets/images/gallery-10.jpg" alt="웨딩 사진 10">
+                            <img src="assets/images/gallery-11.jpg" alt="웨딩 사진 11">
+                            <img src="assets/images/gallery-12.jpg" alt="웨딩 사진 12">
+                            <img src="assets/images/gallery-13.jpg" alt="웨딩 사진 13">
+                            <img src="assets/images/gallery-14.jpg" alt="웨딩 사진 14">
+                            <img src="assets/images/gallery-15.jpg" alt="웨딩 사진 15">
+                            <img src="assets/images/gallery-16.jpg" alt="웨딩 사진 16">
+                            <img src="assets/images/gallery-17.jpg" alt="웨딩 사진 17">
+                            <img src="assets/images/gallery-18.jpg" alt="웨딩 사진 18">
+                            <img src="assets/images/gallery-19.jpg" alt="웨딩 사진 19">
+                        </div>
                     </div>
-                    <button class="gallery-nav" type="button" aria-label="다음">›</button>
                 </div>
-                <p class="gallery-count">1 / 0</p>
+                <div class="gallery-footer">
+                    <button class="gallery-nav" id="gallery-prev" type="button" aria-label="이전 사진">‹</button>
+                    <p class="gallery-count" id="gallery-count">1 / 19</p>
+                    <button class="gallery-nav" id="gallery-next" type="button" aria-label="다음 사진">›</button>
+                </div>
             </section>
 
             <section class="panel panel-blue location-panel">
@@ -270,6 +290,13 @@
             </section>
         </article>
     </main>
+
+    <div class="gallery-lightbox" id="gallery-lightbox" hidden>
+        <button class="gallery-lightbox-close" id="gallery-lightbox-close" type="button" aria-label="사진 닫기">×</button>
+        <button class="gallery-lightbox-nav gallery-lightbox-prev" id="gallery-lightbox-prev" type="button" aria-label="이전 사진">‹</button>
+        <img id="gallery-lightbox-image" src="" alt="">
+        <button class="gallery-lightbox-nav gallery-lightbox-next" id="gallery-lightbox-next" type="button" aria-label="다음 사진">›</button>
+    </div>
 
     <div class="modal-backdrop" id="contact-modal" hidden>
         <section class="modal" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">

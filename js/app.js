@@ -135,6 +135,163 @@ function formatMessageDate(value) {
     return new Intl.DateTimeFormat("ko-KR", { dateStyle: "short", timeStyle: "short" }).format(new Date(value));
 }
 
+function initializeRevealAnimations() {
+    const sections = document.querySelectorAll(".invitation-card > .panel");
+    sections.forEach((section, index) => {
+        section.classList.add("reveal");
+        if (index % 3 === 1) section.classList.add("reveal-delay-1");
+        if (index % 3 === 2) section.classList.add("reveal-delay-2");
+    });
+
+    if (!("IntersectionObserver" in window)) {
+        sections.forEach((section) => section.classList.add("is-visible"));
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries, currentObserver) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-visible");
+            currentObserver.unobserve(entry.target);
+        });
+    }, { threshold: 0.08, rootMargin: "0px 0px -8%" });
+
+    sections.forEach((section) => observer.observe(section));
+}
+
+function initializeGallery() {
+    const viewport = document.getElementById("gallery-viewport");
+    const track = document.getElementById("gallery-track");
+    const count = document.getElementById("gallery-count");
+    const previous = document.getElementById("gallery-prev");
+    const next = document.getElementById("gallery-next");
+    const lightbox = document.getElementById("gallery-lightbox");
+    const lightboxImage = document.getElementById("gallery-lightbox-image");
+    const lightboxClose = document.getElementById("gallery-lightbox-close");
+    const lightboxPrevious = document.getElementById("gallery-lightbox-prev");
+    const lightboxNext = document.getElementById("gallery-lightbox-next");
+    if (!viewport || !track || !count) return;
+
+    const total = track.children.length;
+    let current = 0;
+    let startX = 0;
+    let dragOffset = 0;
+    let dragging = false;
+    let moved = false;
+    let lightboxCurrent = 0;
+    let lightboxStartX = 0;
+
+    const render = (animate = true, offset = 0) => {
+        const activeImage = track.children[current];
+        if (!activeImage) return;
+        const gap = parseFloat(window.getComputedStyle(track).gap) || 0;
+        const centeredStart = (viewport.clientWidth - activeImage.offsetWidth) / 2;
+        const baseOffset = centeredStart - (current * (activeImage.offsetWidth + gap));
+        track.style.transition = animate ? "transform .35s ease" : "none";
+        track.style.transform = `translate3d(${baseOffset + offset}px, 0, 0)`;
+        Array.from(track.children).forEach((image, index) => image.classList.toggle("is-active", index === current));
+        count.textContent = `${current + 1} / ${total}`;
+    };
+
+    const moveTo = (nextIndex) => {
+        current = (nextIndex + total) % total;
+        render();
+    };
+
+    previous?.addEventListener("click", () => moveTo(current - 1));
+    next?.addEventListener("click", () => moveTo(current + 1));
+
+    viewport.addEventListener("pointerdown", (event) => {
+        dragging = true;
+        moved = false;
+        startX = event.clientX;
+        dragOffset = 0;
+        viewport.classList.add("is-dragging");
+        viewport.setPointerCapture?.(event.pointerId);
+        track.style.transition = "none";
+    });
+
+    viewport.addEventListener("pointermove", (event) => {
+        if (!dragging) return;
+        dragOffset = event.clientX - startX;
+        if (Math.abs(dragOffset) > 8) moved = true;
+        render(false, dragOffset);
+    });
+
+    const finishDrag = () => {
+        if (!dragging) return;
+        dragging = false;
+        viewport.classList.remove("is-dragging");
+        if (Math.abs(dragOffset) > Math.min(80, viewport.clientWidth * .18)) {
+            moveTo(current + (dragOffset < 0 ? 1 : -1));
+        } else {
+            render();
+        }
+        dragOffset = 0;
+    };
+
+    viewport.addEventListener("pointerup", finishDrag);
+    viewport.addEventListener("pointercancel", finishDrag);
+    viewport.addEventListener("pointerleave", () => { if (dragging) finishDrag(); });
+    const closeLightbox = () => {
+        if (!lightbox) return;
+        lightbox.hidden = true;
+        if (!document.querySelector(".modal-backdrop:not([hidden])")) document.body.classList.remove("modal-open");
+    };
+
+    const renderLightbox = () => {
+        const image = track.children[lightboxCurrent];
+        if (!image || !lightboxImage) return;
+        lightboxImage.src = image.currentSrc || image.src;
+        lightboxImage.alt = image.alt;
+    };
+
+    const moveLightbox = (offset) => {
+        lightboxCurrent = (lightboxCurrent + offset + total) % total;
+        renderLightbox();
+    };
+
+    const openLightbox = (image) => {
+        if (!lightbox || !lightboxImage) return;
+        lightboxCurrent = Math.max(0, Array.from(track.children).indexOf(image));
+        renderLightbox();
+        lightbox.hidden = false;
+        document.body.classList.add("modal-open");
+        lightboxClose?.focus();
+    };
+
+    lightboxClose?.addEventListener("click", closeLightbox);
+    lightboxPrevious?.addEventListener("click", () => moveLightbox(-1));
+    lightboxNext?.addEventListener("click", () => moveLightbox(1));
+    lightbox?.addEventListener("click", (event) => {
+        if (event.target === lightbox) closeLightbox();
+    });
+    lightbox?.addEventListener("pointerdown", (event) => {
+        if (event.target === lightboxImage) lightboxStartX = event.clientX;
+    });
+    lightbox?.addEventListener("pointerup", (event) => {
+        if (event.target !== lightboxImage) return;
+        const distance = event.clientX - lightboxStartX;
+        if (Math.abs(distance) > 50) moveLightbox(distance < 0 ? 1 : -1);
+    });
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && lightbox && !lightbox.hidden) closeLightbox();
+        if (event.key === "ArrowLeft" && lightbox && !lightbox.hidden) moveLightbox(-1);
+        if (event.key === "ArrowRight" && lightbox && !lightbox.hidden) moveLightbox(1);
+    });
+
+    viewport.addEventListener("click", (event) => {
+        if (moved) {
+            event.preventDefault();
+            return;
+        }
+        const image = event.target.closest("img") || track.children[current];
+        if (image) openLightbox(image);
+    });
+    window.addEventListener("resize", () => render(false));
+    render(false);
+}
+
 function readLocalMessages() {
     try {
         return JSON.parse(localStorage.getItem(messageStorageKey) || "[]");
@@ -204,6 +361,8 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCalendar();
     updateCountdown();
     initializeMap();
+    initializeRevealAnimations();
+    initializeGallery();
     window.setInterval(updateCountdown, 1000);
     loadMessages();
 
